@@ -1,4 +1,4 @@
-package main
+package cyoa
 
 import (
 	"encoding/json"
@@ -12,45 +12,20 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	story, err := unmarshalStory(data)
+	story, err := UnmarshalChapter(data)
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, v := range story.Debate.Options {
-		fmt.Println(v.Arc + ": " + v.Text + "\n")
-	}
+	fmt.Println(story.Title)
+
 }
 
-func unmarshalStory(data []byte) (Story, error) {
-	var r Story
+func UnmarshalChapter(data []byte) (Chapter, error) {
+	var r Chapter
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *Story) marshal() ([]byte, error) {
+func (r *Chapter) Marshal() ([]byte, error) {
 	return json.Marshal(r)
-}
-
-// Story type from gopher.json
-type Story struct {
-	Intro     Debate `json:"intro"`
-	NewYork   Debate `json:"new-york"`
-	Debate    Debate `json:"debate"`
-	SeanKelly Debate `json:"sean-kelly"`
-	MarkBates Debate `json:"mark-bates"`
-	Denver    Debate `json:"denver"`
-	Home      Debate `json:"home"`
-}
-
-// Debate type from gopher
-type Debate struct {
-	Title   string   `json:"title"`
-	Story   []string `json:"story"`
-	Options []Option `json:"options"`
-}
-
-// Option type
-type Option struct {
-	Text string `json:"text"`
-	Arc  string `json:"arc"`
 }
