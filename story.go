@@ -85,10 +85,13 @@ func WithTemplate(t *template.Template) HandlerOption {
 	}
 }
 
-// func WithDatabase(username, password string) HandlerOption {
-
-// }
 type HandlerOption func(h *handler)
+
+func WithPathFunc(fn func(r *http.Request) string) HandlerOption {
+	return func(h *handler) {
+		h.pathFn = fn
+	}
+}
 
 // NewHandler function to handle requests
 func NewHandler(s Story, opts ...HandlerOption) http.Handler {
