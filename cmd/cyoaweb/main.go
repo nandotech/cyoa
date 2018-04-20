@@ -26,7 +26,8 @@ func main() {
 		panic(err)
 	}
 
-	h := cyoa.NewHandler(story, nil)
+	h := cyoa.NewHandler(story)
+
 	fmt.Printf("starting the server at: %d\n", *port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), h))
 }
