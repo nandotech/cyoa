@@ -20,12 +20,14 @@ func main() {
 
 }
 
+// UnmarshalChapter returns Chapter from JSON array
 func UnmarshalChapter(data []byte) (Chapter, error) {
 	var r Chapter
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
+// Marshal function encodes a Chapter
 func (r *Chapter) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }

@@ -79,14 +79,17 @@ var defaultHandlerTemplate = `<!DOCTYPE html>
 </body>
 </html>`
 
+// WithTemplate returns a HandlerOption
 func WithTemplate(t *template.Template) HandlerOption {
 	return func(h *handler) {
 		h.t = t
 	}
 }
 
+// HandlerOption type alias a func
 type HandlerOption func(h *handler)
 
+// WithPathFunc returning HandlerOption passing in a func returning a string
 func WithPathFunc(fn func(r *http.Request) string) HandlerOption {
 	return func(h *handler) {
 		h.pathFn = fn
@@ -131,8 +134,8 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// JsonStory func returns Story from io.Reader
-func JsonStory(r io.Reader) (Story, error) {
+// JSONStory func returns Story from io.Reader
+func JSONStory(r io.Reader) (Story, error) {
 	d := json.NewDecoder(r)
 	var story Story
 	if err := d.Decode(&story); err != nil {
